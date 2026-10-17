@@ -1,133 +1,170 @@
-# Ohovo Memoo – AI Agent Memory with Intentional Forgetting
 
-**Local-first persistent memory for AI agents with built-in intentional forgetting.**  
-Solves context rot, unbounded memory growth, and context inertia.
+---
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![Local-first](https://img.shields.io/badge/local--first-yes-brightgreen.svg)](#)
+```markdown
+# LLM Agent Memory - Agent Memory Forgetting Ohovo Go
 
-## What is Ohovo Memoo?
+**Simple AI Agent Memory Tool with Automatic Forgetting**
 
-Ohovo Memoo (package name: `agent-memory-forget`) is a lightweight Python library that gives AI agents long-term memory while automatically pruning old or low-value information. It runs completely locally using SQLite, has almost zero dependencies, and is designed for real-time use with no lag on the hot path.
+This tool gives AI agents a real memory.  
+It helps AI agents remember important things and forget old things so they stay fast and smart.
 
-It is ideal for developers building autonomous agents, coding assistants, or multi-session AI systems who need memory that does not grow forever.
+It solves the problem of AI agents becoming slow or forgetting important information.
 
-## Compatible AI Models & Frameworks
+## What is this tool?
 
-Works with **any** LLM or agent framework that can call Python functions or read/write local files:
+This is a free Python tool that stores memories on your computer.  
+It works with Claude, ChatGPT, Grok, Gemini, Cursor, and any tool that can run Python.
 
-- Claude (Anthropic) / Claude Code
-- GPT-4o, o1, o3 (OpenAI) / Codex
-- Grok (xAI)
-- Gemini (Google)
-- Local models via Ollama, llama.cpp, vLLM, LM Studio
-- Agent frameworks: LangGraph, CrewAI, AutoGen, OpenHands, Cursor, Continue, Aider, custom agents
+## Who can use it?
 
-No model-specific API is required for the core memory features.
+Anyone who uses AI agents and wants better memory.
 
-## Installation
+## Compatible with
+
+- Claude
+- ChatGPT
+- Grok
+- Gemini
+- Cursor
+- Google Colab
+- Any tool that can run Python code
+
+---
+
+## How to use this tool (Very Easy Steps)
+
+You do **not** need to create any file.  
+Just copy and paste the code directly into the chat.
+
+---
+
+### Step 1: Install the tool
+
+**What this does?**  
+This installs the memory tool.
+
+**Where to paste?**  
+Copy the code below and paste it into your AI chat (Claude, ChatGPT, Cursor, etc.), then press Enter.
 
 ```bash
-# From the package folder
 pip install -e .
-
-# Or later when published
-# pip install ohovo-memoo
 ```
 
-## Quick Start (30 seconds)
+**What you will see?**  
+The tool will start installing. Wait until it finishes.
+
+---
+
+### Step 2: Load the memory tool
+
+**What this does?**  
+This loads the memory tool so you can use it.
+
+**Where to paste?**  
+Copy the code below and paste it into the same chat.
+
+```python
+from agent_memory_forget import MemoryStore
+```
+
+**What you will see?**  
+Nothing special. It just loads the tool silently.
+
+---
+
+### Step 3: Create a memory store
+
+**What this does?**  
+This creates a place to save memories on your computer.
+
+**Where to paste?**  
+Copy the code below and paste it into the same chat.
+
+```python
+store = MemoryStore("my_memory.db")
+```
+
+**What you will see?**  
+Nothing appears. It only creates the memory place.
+
+---
+
+### Step 4: Add a memory
+
+**What this does?**  
+This saves a new memory.
+
+**Where to paste?**  
+Copy the code below and paste it into the same chat.
+
+```python
+store.add("User likes dark mode and short answers", importance=0.9)
+```
+
+**What you will see?**  
+The memory is saved silently. No message will show.
+
+---
+
+### Step 5: Search for a memory
+
+**What this does?**  
+This finds memories that match your words.
+
+**Where to paste?**  
+Copy the code below and paste it into the same chat.
+
+```python
+results = store.search("dark mode", limit=5)
+print(results)
+```
+
+**What you will see?**  
+You will see the memories that match “dark mode”.
+
+---
+
+### Step 6: Forget old memories
+
+**What this does?**  
+This removes old or less important memories.
+
+**Where to paste?**  
+Copy the code below and paste it into the same chat.
+
+```python
+store.forget(older_than_days=30, min_importance=0.3)
+print("Remaining memories:", store.count())
+```
+
+**What you will see?**  
+You will see how many memories are left.
+
+---
+
+## Full Example (Copy everything together)
+
+You can also copy and paste all the code below at once:
 
 ```python
 from agent_memory_forget import MemoryStore
 
-# Create a local memory store (SQLite file)
-store = MemoryStore("my_agent_memory.db")
+store = MemoryStore("my_memory.db")
 
-# Add memories with optional importance score (0.0 – 1.0)
-store.add("User prefers dark mode and concise answers", importance=0.9)
-store.add("Decision: use SQLite for local memory", importance=0.95)
-store.add("Temporary note about current session", importance=0.2)
+store.add("User likes dark mode and short answers", importance=0.9)
 
-# Search for relevant memories
-results = store.search("user interface preferences", limit=5)
-for r in results:
-    print(r)
+results = store.search("dark mode", limit=5)
+print(results)
 
-# Intentionally forget old or low-value memories
 store.forget(older_than_days=30, min_importance=0.3)
-
 print("Remaining memories:", store.count())
 ```
 
-## How to Use – Full User Guide
-
-### 1. Creating a Memory Store
-```python
-store = MemoryStore("path/to/memory.db")  # creates the file if it does not exist
-```
-
-### 2. Adding Memories
-```python
-store.add(text: str, importance: float = 0.5, metadata: dict = None)
-```
-- `importance` helps the forgetting engine decide what to keep.
-- You can attach optional metadata (source, timestamp, tags, etc.).
-
-### 3. Searching Memories
-```python
-results = store.search(query: str, limit: int = 5)
-```
-Returns the most relevant memories (keyword-based by default, fast and local).
-
-### 4. Intentional Forgetting
-```python
-store.forget(
-    older_than_days: int = None,
-    min_importance: float = None,
-    max_count: int = None
-)
-```
-Three complementary strategies:
-- Time-based decay
-- Importance threshold
-- Hard limit on total memories
-
-This directly addresses the “context rot” and “unbounded growth” problems still open in many agent memory GitHub issues.
-
-### 5. Integration Pattern with Agents
-Most agents can call tools. Expose these simple functions as tools:
-
-- `add_memory(text, importance)`
-- `search_memory(query)`
-- `forget_old_memories(...)`
-
-The agent decides when to store or retrieve information. Because everything is local and fast, there is no noticeable latency.
-
-## Why Ohovo Memoo?
-
-- Completely local – no API keys required for core features
-- Extremely fast (Python stdlib + SQLite)
-- Solves real pain points still visible in open GitHub issues in 2026
-- Designed so you can later add paid hosted consolidation, memory packs, or private storage tiers
-
-## Example Output
-
-```
-Total memories: 5
-Search 'decision': ['Decision: use SQLite for local memory']
-Forgot 2 temp items. Remaining: 3
-After decay, top memories:
-  [0.95] Decision: use SQLite for local memory
-  [0.90] User prefers dark mode
-  [0.70] Tried approach A — failed with timeout
-Done — zero lag.
-```
+---
 
 ## License
 
-Apache-2.0 – free for commercial use.
-
-## Contributing
-
-Issues and pull requests are welcome. Focus on real-time performance and minimal dependencies.
+Apache-2.0  
+Free for personal and commercial use.
+```
