@@ -3,7 +3,7 @@
 **Simple AI Agent Memory Tool with Automatic Forgetting**
 
 This tool gives AI agents a real memory.
-Local-first AI agent memory, when prompted ai directly finds the answer to the question instead of searching for the answer in the entire database, it reduces token consumption, response time and memory consumption solving intentional forgetting problem. Solves context rot and unlimited memory growth. Lightweight Python tool for Claude, ChatGPT, Grok and local models.
+Local-first AI agent memory, your ai will be trained such that, when prompted the ai will directly find the answer to the question instead of searching for the answer in the entire database, it reduces token consumption, response time and memory consumption solving intentional forgetting problem. Solves context rot and unlimited memory growth. Lightweight Python tool for Claude, ChatGPT, Grok and local models.
 It helps AI agents remember important things and forget old things so they stay fast and smart.
 
 It solves the problem of AI agents becoming slow or forgetting important information.
