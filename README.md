@@ -1,4 +1,4 @@
-# LLM Agent Memory - Agent Memory Forgetting Ohovo Go
+# LLM Agent Memory - Agent Memory Forgetting Ohovo Memoo Go
 
 **Simple AI Agent Memory Tool with Automatic Forgetting**
 
@@ -46,23 +46,20 @@ Copy the code below and paste it into your AI chat (Claude, ChatGPT, Cursor, etc
 ```bash
 pip install -e .
 
-**What you will see?**
+What you will see?
 
 The tool will start installing. Wait until it finishes.
 
----
+Step 2: Load the memory tool
 
-### Step 2: Load the memory tool
-
-**What this does?**
+What this does?
 
 This loads the memory tool so you can use it.
 
-**Where to paste?**
+Where to paste?
 
-Copy the code below and paste it into the same chat.
+Copy code below & paste it into the same chat. The code that says: from agent_memory_forget import MemoryStore
 
-```python
 from agent_memory_forget import MemoryStore
 ```
 
@@ -156,7 +153,7 @@ You will see how many memories are left.
 
 ## Full Example (Copy everything together)
 
-You can also copy and paste all the code below at once:
+You can also copy and paste all the code below at once in the chat:
 
 ```python
 from agent_memory_forget import MemoryStore
